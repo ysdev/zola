@@ -257,7 +257,8 @@ mod tests {
         if cfg!(target_os = "windows") {
             assert_eq!(
                 strip_unc(&canonicalize(Path::new(&dir)).unwrap()),
-                "C:\\Users\\VssAdministrator\\AppData\\Local\\Temp\\new_project"
+                format!("{}\\Temp\\new_project", std::env::var("LOCALAPPDATA").unwrap())
+                //"C:\\Users\\VssAdministrator\\AppData\\Local\\Temp\\new_project"
             )
         } else {
             assert_eq!(
@@ -283,7 +284,8 @@ mod tests {
         create_dir(&dir).expect("Could not create test directory");
         assert_eq!(
             canonicalize(Path::new(&dir)).unwrap().to_str().unwrap(),
-            "\\\\?\\C:\\Users\\VssAdministrator\\AppData\\Local\\Temp\\new_project"
+            format!("\\\\?\\{}\\Temp\\new_project", std::env::var("LOCALAPPDATA").unwrap())
+            //"\\\\?\\C:\\Users\\VssAdministrator\\AppData\\Local\\Temp\\new_project"
         );
 
         remove_dir_all(&dir).unwrap();
