@@ -544,11 +544,11 @@ impl Site {
             BuildMode::Memory => {
                 let path = if filename != "index.html" {
                     let p = current_path.join(filename);
-                    p.as_os_str().to_string_lossy().replace("public/", "/")
+                    p.as_os_str().to_string_lossy().replace(std::path::MAIN_SEPARATOR, "/").replace("public/", "")
                 } else {
                     // TODO" remove unwrap
-                    let p = current_path.strip_prefix("public").unwrap();
-                    p.as_os_str().to_string_lossy().into_owned()
+                    let p = current_path.strip_prefix(&self.output_path).unwrap();
+                    p.as_os_str().to_string_lossy().replace(std::path::MAIN_SEPARATOR, "/")
                 }
                 .trim_end_matches('/')
                 .to_owned();
