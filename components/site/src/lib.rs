@@ -552,7 +552,8 @@ impl Site {
                 }
                 .trim_end_matches('/')
                 .to_owned();
-                &SITE_CONTENT.write().unwrap().insert(path, final_content);
+                let path_urlized: String = url::Url::parse(&format!("http://127.0.0.1:1111/{}", path)).unwrap().path().to_owned().trim_start_matches('/').to_owned();
+                &SITE_CONTENT.write().unwrap().insert(path_urlized, final_content);
             }
         }
 
