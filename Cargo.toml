@@ -42,7 +42,7 @@ site = { path = "components/site" }
 errors = { path = "components/errors" }
 front_matter = { path = "components/front_matter" }
 utils = { path = "components/utils" }
-search = { path = "components/search", features = ["indexing-ja"] }
+search = { path = "components/search" }
 
 [workspace]
 members = [

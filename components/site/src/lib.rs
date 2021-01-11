@@ -573,19 +573,11 @@ impl Site {
                 create_file(&end_path, &final_content)?;
             }
             BuildMode::Memory => {
-                let site_path = if filename != "index.html" {
-                    site_path.join(filename)
-                } else {
-                	site_path
-                };
-                let path_urlized = RelativePathBuf::from_path(
-                    Path::new(
-                        url::Url::parse(&format!("http://127.0.0.1:1111/{}", site_path.as_str()))
-                        .unwrap().path().to_owned().trim_start_matches('/')
-                )).unwrap();
+                let site_path =
+                    if filename != "index.html" { site_path.join(filename) } else { site_path };
 
-                SITE_CONTENT.write().unwrap().insert(path_urlized, final_content);
-            }
+                SITE_CONTENT.write().unwrap().insert(site_path, final_content);
+           }
         }
 
         Ok(current_path)
